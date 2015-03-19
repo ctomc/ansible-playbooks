@@ -51,6 +51,9 @@
 - name: set permisions
   file: path=/opt owner=teamcity group=teamcity state=directory recurse=true
 
+- name: set permisions
+  file: path=/opt/buildAgent/bin/*.sh owner=teamcity group=teamcity mode=0755
+
 - name: Enable TeamCity agent to be started at boot
   service: name=teamcity-agent enabled=yes state=started
 
