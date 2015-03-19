@@ -53,10 +53,10 @@
 
 - name: set permisions
   file: path={{ item }} owner=teamcity group=teamcity mode=0755
-    with_items:
-     - /opt/buildAgent/bin/agent.sh
-     - /opt/buildAgent/bin/findJava.sh
-     - net-tools
+  with_items:
+    - /opt/buildAgent/bin/agent.sh
+    - /opt/buildAgent/bin/findJava.sh
+    - net-tools
 
 
 - name: Enable TeamCity agent to be started at boot
