@@ -8,6 +8,7 @@
    - libgcc.i686
    - net-tools
    - unzip
+   - {{ teamcity_server_url }}/agents-data/jdk-8u40-linux-i586.rpm
 
 - name: Disable firewall
   service: name=firewalld.service state=stopped enabled=no
@@ -15,8 +16,8 @@
 - name: disable selinux
   selinux: state=disabled
 
-- name: Install JDK8 as default for running teamcity agent
-  yum: name={{ teamcity_server_url }}/agents-data/jdk-8u40-linux-i586.rpm state=present
+#- name: Install JDK8 as default for running teamcity agent
+#  yum: name={{ teamcity_server_url }}/agents-data/jdk-8u40-linux-i586.rpm state=present
 
 - name: Copy the rc.local script
   copy: src=rc.local dest=/etc/init.d/rc.local mode=0755
@@ -52,7 +53,12 @@
   file: path=/opt owner=teamcity group=teamcity state=directory recurse=true
 
 - name: set permisions
-  file: path=/opt/buildAgent/bin/*.sh owner=teamcity group=teamcity mode=0755
+  file: path={{ item }} owner=teamcity group=teamcity mode=0755
+    with_items:
+     - /opt/buildAgent/bin/agent.sh
+     - /opt/buildAgent/bin/findJava.sh
+     - net-tools
+
 
 - name: Enable TeamCity agent to be started at boot
   service: name=teamcity-agent enabled=yes state=started
