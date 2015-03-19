@@ -56,8 +56,6 @@
   with_items:
     - /opt/buildAgent/bin/agent.sh
     - /opt/buildAgent/bin/findJava.sh
-    - net-tools
-
 
 - name: Enable TeamCity agent to be started at boot
   service: name=teamcity-agent enabled=yes state=started
