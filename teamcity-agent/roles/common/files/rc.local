@@ -18,3 +18,5 @@ ip -6 route add table local local ff13::/16 dev lo metric 5
 
 # Add an additional "unique" address to lo for clustering tests
 ifconfig lo add fccc::2/128
+
+sed "s/name=.*/name=`hostname -s`/" -i /opt/buildAgent/conf/buildAgent.properties

@@ -15,7 +15,7 @@
   selinux: state=disabled
 
 - name: Install JDK8
-  yum: name=http://brontes.lab.eng.brq.redhat.com/agents-data/jdk-8u40-linux-i586.rpm state=present
+  yum: name={{ teamcity_server_url }}/agents-data/jdk-8u40-linux-i586.rpm state=present
 
 - name: Copy the rc.local script
   copy: src=rc.local dest=/etc/init.d/rc.local mode=0755
