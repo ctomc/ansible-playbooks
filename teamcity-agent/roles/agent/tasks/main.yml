@@ -23,9 +23,6 @@
 - name: Download build agent
   get_url: url={{ teamcity_server_url }}/update/buildAgent.zip dest=/opt/buildAgent.zip
 
-- name: Extract build agent
-  unarchive: src=/opt/buildAgent.zip dest=/opt/buildAgent copy=no
-
 - name: Add group "teamcity"
   group: name=teamcity
 
@@ -34,6 +31,12 @@
 
 - name: create /store
   file: path=/store owner=teamcity group=teamcity state=directory recurse=true
+
+- name: create /opt/buildAgent
+  file: path=/opt/buildAgent owner=teamcity group=teamcity state=directory recurse=true
+
+- name: Extract build agent
+  unarchive: src=/opt/buildAgent.zip dest=/opt/buildAgent copy=no
 
 - name: Copy the init script
   copy: src=agent-service.sh dest=/etc/init.d/teamcity-agent mode=0755
