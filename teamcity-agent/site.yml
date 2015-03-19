@@ -6,5 +6,6 @@
   vars:
     teamcity_server_url: http://teamcity.brontes.local
   roles:
-    - common
-    - jdk
+    - agent
+  tasks:
+    - include: roles/agent/tasks/jdk.yml

@@ -1,0 +1,52 @@
+---
+# This role contains common plays that will run on all nodes.
+
+- name: Install i686 libs to be able to run 32bit jvm
+  yum: name={{ item }} state=present
+  with_items:
+   - glibc.i686
+   - libgcc.i686
+   - net-tools
+
+- name: Disable firewall
+  service: name=firewalld.service state=stopped enabled=no
+
+- name: disable selinux
+  selinux: state=disabled
+
+- name: Install JDK8 as default for running teamcity agent
+  yum: name={{ teamcity_server_url }}/agents-data/jdk-8u40-linux-i586.rpm state=present
+
+- name: Copy the rc.local script
+  copy: src=rc.local dest=/etc/init.d/rc.local mode=0755
+
+- name: Download build agent
+  get_url: url={{ teamcity_server_url }}/update/buildAgent.zip dest=/opt/buildAgent.zip
+
+- name: Extract build agent
+  unarchive: src=/opt/buildAgent.zip dest=/opt/buildAgent copy=no
+
+- name: Add group "teamcity"
+  group: name=teamcity
+
+- name: Add user "teamcity"
+  user: name=teamcity group=teamcity
+
+- name: create /store
+  file: path=/store owner=teamcity group=teamcity state=directory recurse=true
+
+- name: Copy the init script
+  copy: src=agent-service.sh dest=/etc/init.d/teamcity-agent mode=0755
+
+- name: Copy the init script config
+  template: src=service-config dest=/etc/sysconfig/teamcity
+
+- name: copy agent configuration
+  template: src=buildAgent.properties dest=/opt/buildAgent/conf/
+
+- name: set permisions
+  file: path=/opt owner=teamcity group=teamcity state=directory recurse=true
+
+- name: Enable TeamCity agent to be started at boot
+  service: name=teamcity-agent enabled=yes state=started
+
