@@ -1,0 +1,8 @@
+---
+# This playbook deploys a teamcity agent
+
+- hosts: agents
+  user: root
+
+  roles:
+    - common

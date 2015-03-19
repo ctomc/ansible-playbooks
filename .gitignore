@@ -1,0 +1,4 @@
+wordpress-nginx/hosts
+.DS_Store
+.idea
+teamcity-agent/roles/jboss-standalone

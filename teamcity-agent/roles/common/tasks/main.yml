@@ -1,0 +1,21 @@
+---
+# This role contains common plays that will run on all nodes.
+
+- name: Install i686 libs to be able to run 32bit jvm
+  yum: name={{ item }} state=present
+  with_items:
+   - glibc.i686
+   - libgcc.i686
+   - net-tools
+
+- name: Disable firewall
+  service: name=firewalld.service state=stopped enabled=no
+
+- name: disable selinux
+  selinux: state=disabled
+
+- name: Install JDK8
+  yum: name=http://brontes.lab.eng.brq.redhat.com/agents-data/jdk-8u40-linux-i586.rpm state=present
+
+- name: Copy the rc.local script
+  copy: src=rc.local dest=/etc/init.d/rc.local mode=0755
