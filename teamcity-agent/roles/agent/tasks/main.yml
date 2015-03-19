@@ -7,6 +7,7 @@
    - glibc.i686
    - libgcc.i686
    - net-tools
+   - unzip
 
 - name: Disable firewall
   service: name=firewalld.service state=stopped enabled=no
