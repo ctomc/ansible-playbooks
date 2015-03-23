@@ -73,7 +73,7 @@
   service: name=teamcity-agent enabled=yes state=started
 
 - name: restart machine
-  command: shutdown -r now "Ansible updates triggered"
+  command: /sbin/reboot
   async: 0
   poll: 0
   ignore_errors: true
