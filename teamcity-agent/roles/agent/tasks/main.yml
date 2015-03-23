@@ -1,6 +1,9 @@
 ---
 # This role contains common plays that will run on all nodes.
 
+# add keys
+- authorized_key: user=root key=keys
+
 - name: Install i686 libs to be able to run 32bit jvm
   yum: name={{ item }} state=present
   with_items:
