@@ -25,6 +25,12 @@
 - name: Copy the rc.local script
   copy: src=rc.local dest=/etc/rc.d/rc.local mode=0755
 
+- name: add ip rules
+  command: chdir=/usr/share ip -6 route add table local local ff13::/16 dev lo metric 5
+
+- name: add ip rules
+  command: chdir=/usr/share ifconfig lo add fccc::2/128
+
 - name: Download build agent
   get_url: url={{ teamcity_server_url }}/update/buildAgent.zip dest=/opt/buildAgent.zip
 
