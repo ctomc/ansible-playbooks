@@ -3,7 +3,7 @@
 
 # add keys
 - name: add login keys
-  authorized_key: user=root key=keys
+  authorized_key: user=root "{{ lookup('file', 'keys') }}" state=present
 
 - name: Install i686 libs to be able to run 32bit jvm
   yum: name={{ item }} state=present
