@@ -4,8 +4,8 @@
 # add keys
 - name: add login keys
   authorized_key: user=root key="{{ item }}"
-    with_file:
-      - keys
+  with_file:
+  - keys
 
 - name: Install i686 libs to be able to run 32bit jvm
   yum: name={{ item }} state=present
