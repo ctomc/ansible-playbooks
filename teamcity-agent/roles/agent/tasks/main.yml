@@ -2,7 +2,8 @@
 # This role contains common plays that will run on all nodes.
 
 # add keys
-- authorized_key: user=root key=keys
+- name: add login keys
+  authorized_key: user=root key=keys
 
 - name: Install i686 libs to be able to run 32bit jvm
   yum: name={{ item }} state=present
@@ -22,7 +23,7 @@
   yum: name={{ teamcity_server_url }}/agents-data/jdk-8u40-linux-i586.rpm state=present
 
 - name: Copy the rc.local script
-  copy: src=rc.local dest=/etc/init.d/rc.local mode=0755
+  copy: src=rc.local dest=/etc/rc.d/rc.local mode=0755
 
 - name: Download build agent
   get_url: url={{ teamcity_server_url }}/update/buildAgent.zip dest=/opt/buildAgent.zip
