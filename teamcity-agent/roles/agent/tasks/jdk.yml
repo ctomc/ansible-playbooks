@@ -13,8 +13,8 @@
   unarchive: src=/opt/jdk-7u76-linux-i586.tar.gz dest=/usr/java copy=no
 
 - name: Extract IBM JDK7
-  unarchive: src=/opt/java-i386-71.tar.gz dest=/opt/ibm copy=no
+  unarchive: src=/opt/java-i386-71.tar.gz dest=/opt copy=no
 
 - name: Extract IBM JDK8
-  unarchive: src=/opt/java-i386-80.tar.gz dest=/opt/ibm copy=no
+  unarchive: src=/opt/java-i386-80.tar.gz dest=/opt copy=no
 
