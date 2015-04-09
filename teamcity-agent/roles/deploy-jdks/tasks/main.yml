@@ -1,4 +1,5 @@
 ---
+# deploy additional JDKs
 
 - name: Download JDK7
   get_url: url={{ teamcity_server_url }}/agents-data/jdk-7u76-linux-i586.tar.gz dest=/opt/jdk-7u76-linux-i586.tar.gz
@@ -17,4 +18,7 @@
 
 - name: Extract IBM JDK8
   unarchive: src=/opt/java-i386-80.tar.gz dest=/opt copy=no
+
+#- name: Restart agent to apply new JDKs
+#  service: name=teamcity-agent enabled=yes state=restarted
 

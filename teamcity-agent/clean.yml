@@ -6,4 +6,4 @@
   vars:
     teamcity_server_url: http://teamcity.brontes.local
   roles:
-    - agent
+    - clean

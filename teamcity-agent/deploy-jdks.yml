@@ -1,0 +1,9 @@
+---
+# This playbook deploys a teamcity agent
+
+- hosts: agents
+  user: root
+  vars:
+    teamcity_server_url: http://teamcity.brontes.local
+  roles:
+    - deploy-jdks

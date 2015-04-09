@@ -69,30 +69,6 @@
     - /opt/buildAgent/bin/agent.sh
     - /opt/buildAgent/bin/findJava.sh
 
-#install aditional jvms
-
-- name: Download JDK7
-  get_url: url={{ teamcity_server_url }}/agents-data/jdk-7u76-linux-i586.tar.gz dest=/opt/jdk-7u76-linux-i586.tar.gz
-
-- name: Download IBM JDK7
-  get_url: url={{ teamcity_server_url }}/agents-data/java-i386-71.tar.gz dest=/opt/java-i386-71.tar.gz
-
-- name: Download IBM JDK8
-  get_url: url={{ teamcity_server_url }}/agents-data/java-i386-80.tar.gz dest=/opt/java-i386-80.tar.gz
-
-- name: Extract JDK7
-  unarchive: src=/opt/jdk-7u76-linux-i586.tar.gz dest=/usr/java copy=no
-
-- name: create /opt/ibm
-  file: path=/opt/ibm owner=teamcity group=teamcity state=directory recurse=true
-
-- name: Extract IBM JDK7
-  unarchive: src=/opt/java-i386-71.tar.gz dest=/opt/ibm copy=no
-
-- name: Extract IBM JDK8
-  unarchive: src=/opt/java-i386-80.tar.gz dest=/opt/ibm copy=no
-
-
 - name: Enable TeamCity agent to be started at boot
   service: name=teamcity-agent enabled=yes state=started
 

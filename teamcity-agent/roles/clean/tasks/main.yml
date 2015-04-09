@@ -1,0 +1,26 @@
+---
+# This role contains common plays that will run on all nodes.
+
+- name: stop agent
+  service: name=teamcity-agent state=stoped
+
+- name: clean maven repo
+  file: path={{ item }} owner=teamcity group=teamcity state=absent
+  with_items:
+    - /store/repository/
+    - /opt/buildAgent/logs
+    - /opt/buildAgent/work
+    - /opt/buildAgent/temp
+- command: /usr/bin/rm -rf /tmp/*
+
+- name: set permisions
+  file: path=/opt owner=teamcity group=teamcity state=directory recurse=true
+
+- name: set permisions
+  file: path={{ item }} owner=teamcity group=teamcity mode=0755
+  with_items:
+    - /opt/buildAgent/bin/agent.sh
+    - /opt/buildAgent/bin/findJava.sh
+
+- name: start agent
+  service: name=teamcity-agent state=started
