@@ -7,5 +7,3 @@
     teamcity_server_url: http://teamcity.brontes.local
   roles:
     - agent
-  tasks:
-    - include: roles/agent/tasks/jdk.yml
