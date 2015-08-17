@@ -1,0 +1,10 @@
+---
+# This role adds rng
+
+- name: Install i686 libs to be able to run 32bit jvm
+  yum: name={{ item }} state=present
+  with_items:
+   - haveged
+
+- name: Enable haveged service to be started at boot
+  service: name=haveged enabled=yes state=started

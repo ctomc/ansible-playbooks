@@ -15,6 +15,8 @@
    - net-tools
    - unzip
    - git
+   - bzip2
+   - haveged
 
 - name: Disable firewall
   service: name=firewalld.service state=stopped enabled=no
@@ -72,6 +74,9 @@
 
 - name: Enable TeamCity agent to be started at boot
   service: name=teamcity-agent enabled=yes state=started
+
+- name: Enable haveged service to be started at boot
+  service: name=haveged enabled=yes state=started
 
 - name: restart machine
   command: /sbin/reboot

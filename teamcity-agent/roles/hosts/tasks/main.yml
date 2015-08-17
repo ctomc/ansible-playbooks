@@ -1,0 +1,23 @@
+---
+# This role contains common plays that will run on all nodes.
+
+- name: copy agent configuration
+  template: src=buildAgent.properties dest=/opt/buildAgent/conf/
+
+- name: set permisions
+  file: path=/opt owner=teamcity group=teamcity state=directory recurse=true
+
+- name: set permisions
+  file: path={{ item }} owner=teamcity group=teamcity mode=0755
+  with_items:
+    - /opt/buildAgent/bin/agent.sh
+    - /opt/buildAgent/bin/findJava.sh
+
+- name: Enable TeamCity agent to be started at boot
+  service: name=teamcity-agent enabled=yes state=started
+
+- name: restart machine
+  command: /sbin/reboot
+  async: 0
+  poll: 0
+  ignore_errors: true
