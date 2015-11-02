@@ -56,6 +56,3 @@
 
 - name: Restart agent to apply new JDKs
   service: name=teamcity-agent enabled=yes state=restarted
-
-- name: start agent
-  service: name=teamcity-agent state=started
