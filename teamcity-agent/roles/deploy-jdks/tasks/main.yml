@@ -1,5 +1,8 @@
 ---
 
+- name: stop agent
+  service: name=teamcity-agent state=stopped
+
 - name: remove old jdks
   file: path={{ item }} state=absent
   with_items:
@@ -46,11 +49,14 @@
 - name: Extract IBM JDK8
   unarchive: src=/opt/java-i386-80.tar.gz dest=/opt/ibm/ copy=no
 
+- name: Link default & latest jvm
+  file: src=/usr/java/latest dest=/usr/java/jdk1.8.0_65 state=link
+
 - name: remove temp
-  file: path={{ item }} owner=teamcity group=teamcity state=absent
-  with_items:
-    - /opt/*.tar.gz
+  shell: rm -rf /opt/*.tar.gz
 
 - name: Restart agent to apply new JDKs
   service: name=teamcity-agent enabled=yes state=restarted
 
+- name: start agent
+  service: name=teamcity-agent state=started
