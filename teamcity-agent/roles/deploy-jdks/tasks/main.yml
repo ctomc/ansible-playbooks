@@ -12,7 +12,6 @@
 - shell: rm -rf /opt/*.tar.gz
 - shell: rm -rf /usr/java/jdk*
 
-# deploy additional JDKs
 - name: Download JDK7
   get_url: url={{ teamcity_server_url }}/agents-data/jdk-7u76-linux-i586.tar.gz dest=/opt/jdk-7u76-linux-i586.tar.gz
 
@@ -50,7 +49,7 @@
   unarchive: src=/opt/java-i386-80.tar.gz dest=/opt/ibm/ copy=no
 
 - name: Link default & latest jvm
-  file: src=/usr/java/latest dest=/usr/java/jdk1.8.0_65 state=link
+  file: dest=/usr/java/latest src=/usr/java/jdk1.8.0_65 state=link owner=teamcity group=teamcity
 
 - name: remove temp
   shell: rm -rf /opt/*.tar.gz
