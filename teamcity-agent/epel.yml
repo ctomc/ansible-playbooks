@@ -1,0 +1,8 @@
+---
+# This playbook deploys a teamcity agent
+
+- hosts: 
+    #- agents-el7
+    - build00-el7
+  roles:
+    - repo-epel
