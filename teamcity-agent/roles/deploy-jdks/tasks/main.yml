@@ -1,12 +1,13 @@
 ---
 
 - name: remove old jdks
-  file: path={{ item }} owner=teamcity group=teamcity state=absent
+  file: path={{ item }} state=absent
   with_items:
-    - /opt/*.tar.gz
-    - /usr/java/jdk*
-    - /opt/ibm/*
+    - /opt/ibm/java-i386-80
+    - /opt/ibm/java-i386-71
 
+- shell: rm -rf /opt/*.tar.gz
+- shell: rm -rf /usr/java/jdk*
 
 # deploy additional JDKs
 - name: Download JDK7
@@ -50,6 +51,6 @@
   with_items:
     - /opt/*.tar.gz
 
-#- name: Restart agent to apply new JDKs
-#  service: name=teamcity-agent enabled=yes state=restarted
+- name: Restart agent to apply new JDKs
+  service: name=teamcity-agent enabled=yes state=restarted
 
