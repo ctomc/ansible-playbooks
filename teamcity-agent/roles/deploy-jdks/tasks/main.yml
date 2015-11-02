@@ -10,8 +10,17 @@
 - name: Download IBM JDK8
   get_url: url={{ teamcity_server_url }}/agents-data/java-i386-80.tar.gz dest=/opt/java-i386-80.tar.gz
 
+- name: Download Oracle JDK6
+  get_url: url={{ teamcity_server_url }}/agents-data/jdk-6u45-linux-i586.tar.gz dest=/opt/jdk-6u45-linux-i586.tar.gz
+
 - name: Download Oracle JDK8
   get_url: url={{ teamcity_server_url }}/agents-data/jdk-8u65-linux-i586.tar.gz dest=/opt/jdk-8u65-linux-i586.tar.gz
+
+- name: Download Oracle JDK9 EA
+  get_url: url={{ teamcity_server_url }}/agents-data/jdk-9-ea-bin-b90-linux-i586-29_oct_2015.tar.gz  dest=/opt/jdk-9-ea-bin-b90-linux-i586-29_oct_2015.tar.gz
+
+- name: Extract JDK6
+  unarchive: src=/opt/jdk-6u45-linux-i586.tar.gz dest=/usr/java copy=no
 
 - name: Extract JDK7
   unarchive: src=/opt/jdk-7u76-linux-i586.tar.gz dest=/usr/java copy=no
@@ -19,12 +28,14 @@
 - name: Extract JDK8
   unarchive: src=/opt/jdk-8u65-linux-i586.tar.gz dest=/usr/java copy=no
 
+- name: Extract JDK9 EA
+  unarchive: src=/opt/jdk-9-ea-bin-b90-linux-i586-29_oct_2015.tar.gz dest=/usr/java copy=no
+
 - name: Extract IBM JDK7
-  unarchive: src=/opt/java-i386-71.tar.gz dest=/opt copy=no
+  unarchive: src=/opt/java-i386-71.tar.gz dest=/opt/ibm/ copy=no
 
 - name: Extract IBM JDK8
-  unarchive: src=/opt/java-i386-80.tar.gz dest=/opt copy=no
-
+  unarchive: src=/opt/java-i386-80.tar.gz dest=/opt/ibm/ copy=no
 
 
 #- name: Restart agent to apply new JDKs

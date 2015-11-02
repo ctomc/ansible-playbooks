@@ -1,5 +1,4 @@
 # {{ ansible_managed }}
 AGENT_DIR=/opt/buildAgent/
-export IBM_JDK_17=/opt/ibm/java-i386-71
 export TESTIP="$(/sbin/ip -o -4 addr list {{ansible_default_ipv4.interface}} | awk '{print $4}' | cut -d/ -f1)"
 export TESTIP_V6="$(ip -o -4 -f inet6 addr list {{ansible_default_ipv4.interface}} | awk '{print $4}' | cut -d/ -f1)"
