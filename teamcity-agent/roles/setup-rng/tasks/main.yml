@@ -1,7 +1,7 @@
 ---
 # This role adds rng
 
-- name: Install i686 libs to be able to run 32bit jvm
+- name: Install haveged deamon
   yum: name={{ item }} state=present
   with_items:
    - haveged
