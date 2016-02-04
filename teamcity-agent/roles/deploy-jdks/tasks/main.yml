@@ -13,6 +13,8 @@
 - shell: rm -rf /opt/*.tar.gz
 - shell: rm -rf /usr/java/jdk*
 
+- file: path=/opt/ibm owner=teamcity group=teamcity state=directory recurse=true
+
 - name: Install JDK8 as default for running teamcity agent
   yum: name={{ teamcity_server_url }}/agents-data/jdk-8u72-linux-i586.rpm state=present
 
