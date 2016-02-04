@@ -9,11 +9,12 @@
     - /opt/ibm/java-i386-80
     - /opt/ibm/java-i386-71
 
+- yum: name=jdk* state=absent
 - shell: rm -rf /opt/*.tar.gz
 - shell: rm -rf /usr/java/jdk*
 
-- name: Download JDK7
-  get_url: url={{ teamcity_server_url }}/agents-data/jdk-7u76-linux-i586.tar.gz dest=/opt/jdk-7u76-linux-i586.tar.gz
+- name: Install JDK8 as default for running teamcity agent
+  yum: name={{ teamcity_server_url }}/agents-data/jdk-8u72-linux-i586.rpm state=present
 
 - name: Download IBM JDK7
   get_url: url={{ teamcity_server_url }}/agents-data/java-i386-71.tar.gz dest=/opt/java-i386-71.tar.gz
@@ -24,32 +25,35 @@
 - name: Download Oracle JDK6
   get_url: url={{ teamcity_server_url }}/agents-data/jdk-6u45-linux-i586.tar.gz dest=/opt/jdk-6u45-linux-i586.tar.gz
 
-- name: Download Oracle JDK8
-  get_url: url={{ teamcity_server_url }}/agents-data/jdk-8u65-linux-i586.tar.gz dest=/opt/jdk-8u65-linux-i586.tar.gz
+- name: Download Oracle JDK7
+  get_url: url={{ teamcity_server_url }}/agents-data/jdk-7u80-linux-i586.tar.gz dest=/opt/jdk-7u80-linux-i586.tar.gz
+
+#- name: Download Oracle JDK8
+#  get_url: url={{ teamcity_server_url }}/agents-data/jdk-8u72-linux-i586.tar.gz dest=/opt/jdk-8u72-linux-i586.tar.gz
 
 - name: Download Oracle JDK9 EA
-  get_url: url={{ teamcity_server_url }}/agents-data/jdk-9-ea-bin-b90-linux-i586-29_oct_2015.tar.gz  dest=/opt/jdk-9-ea-bin-b90-linux-i586-29_oct_2015.tar.gz
+  get_url: url={{ teamcity_server_url }}/agents-data/jdk-9-ea+103_linux-x86_bin.tar.gz  dest=/opt/jdk-9-ea+103_linux-x86_bin.tar.gz
 
 - name: Extract JDK6
-  unarchive: src=/opt/jdk-6u45-linux-i586.tar.gz dest=/usr/java copy=no
+  unarchive: src=/opt/jdk-6u45-linux-i586.tar.gz dest=/usr/java copy=no creates=/usr/java/jdk1.6.0_45
 
 - name: Extract JDK7
-  unarchive: src=/opt/jdk-7u76-linux-i586.tar.gz dest=/usr/java copy=no
+  unarchive: src=/opt/jdk-7u80-linux-i586.tar.gz dest=/usr/java copy=no creates=/usr/java/jdk1.7.0_80
 
-- name: Extract JDK8
-  unarchive: src=/opt/jdk-8u65-linux-i586.tar.gz dest=/usr/java copy=no
+#- name: Extract JDK8
+#  unarchive: src=/opt/jdk-8u72-linux-i586.tar.gz dest=/usr/java copy=no creates=/usr/java/jdk1.8.0_72
 
 - name: Extract JDK9 EA
-  unarchive: src=/opt/jdk-9-ea-bin-b90-linux-i586-29_oct_2015.tar.gz dest=/usr/java copy=no
+  unarchive: src=/opt/jdk-9-ea+103_linux-x86_bin.tar.gz dest=/usr/java copy=no creates=/usr/java/jdk-9
 
 - name: Extract IBM JDK7
-  unarchive: src=/opt/java-i386-71.tar.gz dest=/opt/ibm/ copy=no
+  unarchive: src=/opt/java-i386-71.tar.gz dest=/opt/ibm/ copy=no creates=ibm-java-i386-71
 
 - name: Extract IBM JDK8
-  unarchive: src=/opt/java-i386-80.tar.gz dest=/opt/ibm/ copy=no
+  unarchive: src=/opt/java-i386-80.tar.gz dest=/opt/ibm/ copy=no creates=ibm-java-i386-80
 
-- name: Link default & latest jvm
-  file: dest=/usr/java/latest src=/usr/java/jdk1.8.0_65 state=link owner=teamcity group=teamcity
+#- name: Link default & latest jvm
+#  file: dest=/usr/java/latest src=/usr/java/jdk1.8.0_72 state=link owner=teamcity group=teamcity
 
 - name: remove temp
   shell: rm -rf /opt/*.tar.gz

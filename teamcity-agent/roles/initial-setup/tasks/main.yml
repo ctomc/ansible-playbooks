@@ -25,7 +25,7 @@
   selinux: state=disabled
 
 - name: Install JDK8 as default for running teamcity agent
-  yum: name={{ teamcity_server_url }}/agents-data/jdk-8u40-linux-i586.rpm state=present
+  yum: name={{ teamcity_server_url }}/agents-data/jdk-8u72-linux-i586.rpm state=present
 
 - name: Copy the rc.local script
   copy: src=rc.local dest=/etc/rc.d/rc.local mode=0755
