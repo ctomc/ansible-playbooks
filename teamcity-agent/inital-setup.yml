@@ -8,5 +8,5 @@
   roles:
     - repo-epel
     - setup-rng
-    - inital-setup
+    - initial-setup
     - deploy-jdks
