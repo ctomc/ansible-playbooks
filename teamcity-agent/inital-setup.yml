@@ -4,7 +4,9 @@
 - hosts: agents
   user: root
   vars:
-    teamcity_server_url: http://teamcity.brontes.local
+    teamcity_server_url: http://teamcity.ci.wildfly.org
   roles:
+    - repo-epel
+    - setup-rng
     - inital-setup
     - deploy-jdks
