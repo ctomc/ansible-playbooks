@@ -7,6 +7,9 @@
   with_file:
   - keys
 
+- name: update distro to latest
+  yum: name=* state=latest
+
 - name: Install i686 libs to be able to run 32bit jvm
   yum: name={{ item }} state=present
   with_items:
