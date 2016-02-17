@@ -1,9 +1,9 @@
 ---
 # This playbook deploys a teamcity agent
 
-- hosts: agents-el6
+- hosts: agents
   user: root
   vars:
-    teamcity_server_url: http://teamcity.brontes.local
+    teamcity_server_url: http://teamcity.ci.wildfly.org
   roles:
     - clean
