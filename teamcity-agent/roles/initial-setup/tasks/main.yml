@@ -4,15 +4,6 @@
 - name: Disable firewall
   service: name=firewalld.service state=stopped enabled=no
 
-- name: disable selinux
-  selinux: state=disabled
-
-# add keys
-- name: add login keys
-  authorized_key: user=root key="{{ item }}"
-  with_file:
-  - keys
-
 - name: update distro to latest
   yum: name=* state=latest
 
@@ -26,6 +17,15 @@
    - git
    - bzip2
    - open-vm-tools
+   - libselinux-python
+
+- name: disable selinux
+  selinux: state=disabled
+
+- name: add login keys
+  authorized_key: user=root key="{{ item }}"
+  with_file:
+    - keys
 
 - name: Install JDK8 as default for running teamcity agent
   yum: name={{ teamcity_server_url }}/agents-data/jdk-8u74-linux-i586.rpm state=present
