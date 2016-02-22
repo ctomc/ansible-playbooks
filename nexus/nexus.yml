@@ -30,13 +30,20 @@
   roles:
   - role: jdauphant.nginx
     nginx_http_params:
-      - sendfile "on"
-      - access_log "/var/log/nginx/access.log"
+      #- sendfile "on"
+      #- access_log "/var/log/nginx/access.log"
+      - proxy_send_timeout 120;
+      - proxy_read_timeout 300;
+      - proxy_buffering    off;
+      - keepalive_timeout  5 5;
+      - tcp_nodelay        on;
     nginx_sites:
       repository:
         - listen 80 default_server
         - server_name repository repository.ci.wildfly.org _
+        - client_max_body_size 1G
         - location / { proxy_pass http://127.0.0.1:9999/;
+                       proxy_set_header Host $host;
                                proxy_http_version  1.1; }
     nginx_configs:
       proxy:
