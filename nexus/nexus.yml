@@ -4,7 +4,11 @@
       yum: name=* state=latest
 
     - name: Install OpenJDK
-      yum: name=java-1.8.0-openjdk-devel state=latest
+      yum: name={{ item }} state=latest
+      with_items:
+      - java-1.8.0-openjdk-devel
+      - open-vm-tools
+      - libselinux-python
 
     - name: Remove unneeded stuff
       yum: name=wpa_supplicant state=absent
@@ -34,6 +38,6 @@
         - proxy_set_header X-Real-IP  $remote_addr
         - proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for
   - role: ansible-nexus
-    nexus_properties: { 'nexus-work': '/var/nexus',
+    nexus_properties: { 'nexus-work': '/store/nexus',
                         'application-port': 9999,
                        'nexus-webapp-context-path': '/' }
