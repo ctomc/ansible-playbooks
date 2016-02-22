@@ -1,0 +1,9 @@
+# install_roles.yml
+
+# from galaxy
+- src: jdauphant.nginx
+
+# from github
+- src: https://github.com/ctomc/ansible-nexus
+
+
