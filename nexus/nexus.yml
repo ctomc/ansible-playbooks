@@ -1,6 +1,25 @@
 - hosts: repository
+  tasks:
+    - name: update distro to latest
+      yum: name=* state=latest
+
+    - name: Install OpenJDK
+      yum: name=java-1.8.0-openjdk-devel state=latest
+
+    - name: Remove unneeded stuff
+      yum: name=wpa_supplicant state=absent
+      yum: name=postfix state=absent
+
+    - name: disable selinux
+      selinux: state=disabled
+
+    - name: add login keys
+      authorized_key: user=root key="{{ item }}"
+      with_file:
+        - keys
+
   roles:
-  - role: nginx,
+  - role: jdauphant.nginx
     nginx_http_params:
       - sendfile "on"
       - access_log "/var/log/nginx/access.log"
@@ -14,6 +33,7 @@
       proxy:
         - proxy_set_header X-Real-IP  $remote_addr
         - proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for
-  - role: nexus,
-    nexus_properties: {'application-port': 9999,
+  - role: ansible-nexus
+    nexus_properties: { 'nexus-work': '/var/nexus',
+                        'application-port': 9999,
                        'nexus-webapp-context-path': '/' }
