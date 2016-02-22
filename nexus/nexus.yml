@@ -32,11 +32,11 @@
     nginx_http_params:
       #- sendfile "on"
       #- access_log "/var/log/nginx/access.log"
-      - proxy_send_timeout 120;
-      - proxy_read_timeout 300;
-      - proxy_buffering    off;
-      - keepalive_timeout  5 5;
-      - tcp_nodelay        on;
+      - proxy_send_timeout 120
+      - proxy_read_timeout 300
+      - proxy_buffering    off
+      - keepalive_timeout  5 5
+      - tcp_nodelay        on
     nginx_sites:
       repository:
         - listen 80 default_server
