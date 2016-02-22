@@ -11,8 +11,10 @@
       - libselinux-python
 
     - name: Remove unneeded stuff
-      yum: name=wpa_supplicant state=absent
-      yum: name=postfix state=absent
+      yum: name={{ item }} state=removed
+      with_items:
+          - wpa_supplicant
+          - postfix
 
     - name: disable selinux
       selinux: state=disabled
@@ -21,6 +23,9 @@
       authorized_key: user=root key="{{ item }}"
       with_file:
         - keys
+    - name: Enable nexus to be started at boot
+      service: name=nexus enabled=yes state=started
+
 
   roles:
   - role: jdauphant.nginx
