@@ -1,0 +1,22 @@
+---
+
+- name: stop agent
+  service: name=teamcity-agent state=stopped
+
+- name: remove old JDK9
+  file: path={{ item }} state=absent
+  with_items:
+    - /usr/java/jdk-9
+    - /opt/ibm/java-i386-71
+
+- name: Download Oracle JDK9 EA
+  get_url: url={{ teamcity_server_url }}/agents-data/jigsaw-jdk-9-ea+107_linux-x86_bin.tar.gz  dest=/opt/jigsaw-jdk-9-ea+107_linux-x86_bin.tar.gz
+
+- name: Extract JDK9 EA
+  unarchive: src=/opt/jigsaw-jdk-9-ea+107_linux-x86_bin.tar.gz dest=/usr/java copy=no creates=/usr/java/jdk-9
+
+- name: remove temp
+  shell: rm -rf /opt/*.tar.gz
+
+- name: Restart agent to apply new JDKs
+  service: name=teamcity-agent enabled=yes state=restarted
