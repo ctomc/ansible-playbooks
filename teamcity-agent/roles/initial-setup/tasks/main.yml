@@ -46,7 +46,7 @@
   group: name=teamcity
 
 - name: Add user "teamcity"
-  user: name=teamcity group=teamcity
+  user: name=teamcity group=teamcity shell=/bin/bash state=present
 
 - name: create /store
   file: path=/store owner=teamcity group=teamcity state=directory recurse=true
@@ -55,7 +55,8 @@
   file: path=/opt/buildAgent owner=teamcity group=teamcity state=directory recurse=true
 
 - name: Extract build agent
-  unarchive: src=/opt/buildAgent.zip dest=/opt/buildAgent copy=no
+  unarchive: src=/opt/buildAgent.zip dest=/opt/buildAgent copy=no creates=/opt/buildAgent
+  file: path=/opt/buildAgent.zip state=absent
 
 - name: Copy the init script
   copy: src=agent-service.sh dest=/etc/init.d/teamcity-agent mode=0755
@@ -77,6 +78,10 @@
 
 - name: Enable TeamCity agent to be started at boot
   service: name=teamcity-agent enabled=yes state=started
+
+- name: Add sudoers permissions to reboot
+  lineinfile: "dest=/etc/sudoers state=present regexp='^%teamcity' line='%teamcity ALL=(ALL) NOPASSWD: ALL'"
+  lineinfile: "dest=/etc/sudoers state=present regexp='^requiretty' line='#Defaults    requiretty"
 
 - name: restart machine
   shell: sleep 2 && shutdown -r now "Ansible updates triggered"
