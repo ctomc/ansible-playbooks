@@ -33,9 +33,6 @@
 #- name: Download Oracle JDK8
 #  get_url: url={{ teamcity_server_url }}/agents-data/jdk-8u72-linux-i586.tar.gz dest=/opt/jdk-8u72-linux-i586.tar.gz
 
-- name: Download Oracle JDK9 EA
-  get_url: url={{ teamcity_server_url }}/agents-data/jdk-9-ea+105_linux-x86_bin.tar.gz  dest=/opt/jdk-9-ea+105_linux-x86_bin.tar.gz
-
 - name: Extract JDK6
   unarchive: src=/opt/jdk-6u45-linux-i586.tar.gz dest=/usr/java copy=no creates=/usr/java/jdk1.6.0_45
 
@@ -44,9 +41,6 @@
 
 #- name: Extract JDK8
 #  unarchive: src=/opt/jdk-8u72-linux-i586.tar.gz dest=/usr/java copy=no creates=/usr/java/jdk1.8.0_72
-
-- name: Extract JDK9 EA
-  unarchive: src=/opt/jdk-9-ea+105_linux-x86_bin.tar.gz dest=/usr/java copy=no creates=/usr/java/jdk-9
 
 - name: Extract IBM JDK7
   unarchive: src=/opt/java-i386-71.tar.gz dest=/opt/ibm/ copy=no creates=ibm-java-i386-71
