@@ -15,12 +15,12 @@
 - name: Download OpenJDK 9 EA
   get_url: url={{ teamcity_server_url }}/agents-data/{{ jdk9_file_name }} dest=/opt/jdk-9-ea.tar.gz
 
-
-- name: Extract OpenJDK9 Jigsaw EA
-  unarchive: src=/opt/jigsaw-jdk-9-ea.tar.gz dest=/usr/java/jigsaw copy=no creates=/usr/java/jigsaw/jdk-9
-
 - name: Extract JDK9 EA
   unarchive: src=/opt/jdk-9-ea.tar.gz dest=/usr/java copy=no creates=/usr/java/jdk-9
+
+- name: Extract OpenJDK9 Jigsaw EA
+  file: path=/usr/java/jigsaw owner=teamcity group=teamcity state=directory recurse=true
+  unarchive: src=/opt/jigsaw-jdk-9-ea.tar.gz dest=/usr/java/jigsaw copy=no creates=/usr/java/jigsaw/jdk-9
 
 - name: remove temp
   shell: rm -rf /opt/*.tar.gz
