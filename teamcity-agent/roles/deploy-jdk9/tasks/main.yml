@@ -18,8 +18,10 @@
 - name: Extract JDK9 EA
   unarchive: src=/opt/jdk-9-ea.tar.gz dest=/usr/java copy=no creates=/usr/java/jdk-9
 
-- name: Extract OpenJDK9 Jigsaw EA
+- name: create jigsaw directory
   file: path=/usr/java/jigsaw owner=teamcity group=teamcity state=directory recurse=true
+
+- name: Extract OpenJDK9 Jigsaw EA
   unarchive: src=/opt/jigsaw-jdk-9-ea.tar.gz dest=/usr/java/jigsaw copy=no creates=/usr/java/jigsaw/jdk-9
 
 - name: remove temp
