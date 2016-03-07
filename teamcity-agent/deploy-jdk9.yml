@@ -5,5 +5,7 @@
   user: root
   vars:
     teamcity_server_url: http://teamcity.ci.wildfly.org
+    jdk9_file_name: jigsaw-jdk-9-ea+107_linux-x86_bin.tar.gz
+    jdk9_jigsaw_file_name: jdk-9-ea+107_linux-x86_bin.tar.gz
   roles:
     - deploy-jdk9

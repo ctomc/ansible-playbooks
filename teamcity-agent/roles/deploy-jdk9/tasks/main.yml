@@ -7,15 +7,36 @@
   file: path={{ item }} state=absent
   with_items:
     - /usr/java/jdk-9
+    - /usr/java/jigsaw/jdk-9
 
-- name: Download Oracle JDK9 EA
-  get_url: url={{ teamcity_server_url }}/agents-data/jigsaw-jdk-9-ea+107_linux-x86_bin.tar.gz  dest=/opt/jigsaw-jdk-9-ea+107_linux-x86_bin.tar.gz
+- name: Download OpenJDK 9 jigsaw EA
+  get_url: url={{ teamcity_server_url }}/agents-data/{{ jdk9_jigsaw_file_name }} dest=/opt/jigsaw-jdk-9-ea.tar.gz
+
+- name: Download OpenJDK 9 EA
+  get_url: url={{ teamcity_server_url }}/agents-data/{{ jdk9_file_name }} dest=/opt/jdk-9-ea.tar.gz
+
+
+- name: Extract OpenJDK9 Jigsaw EA
+  unarchive: src=/opt/jigsaw-jdk-9-ea.tar.gz dest=/usr/java/jigsaw copy=no creates=/usr/java/jigsaw/jdk-9
 
 - name: Extract JDK9 EA
-  unarchive: src=/opt/jigsaw-jdk-9-ea+107_linux-x86_bin.tar.gz dest=/usr/java copy=no creates=/usr/java/jdk-9
+  unarchive: src=/opt/jdk-9-ea.tar.gz dest=/usr/java copy=no creates=/usr/java/jdk-9
 
 - name: remove temp
   shell: rm -rf /opt/*.tar.gz
+
+- name: Configure buildAgent.properties
+  lineinfile:
+    dest="/opt/buildAgent/conf/buildAgent.properties"
+    line="env.JDK_19=/usr/java/jdk-9"
+    regexp="env.JDK_19=.*"
+    state=present
+  lineinfile:
+    dest="/opt/buildAgent/conf/buildAgent.properties"
+    line="env.JDK_19_JIGSAW=/usr/java/jigsaw/jdk-9"
+    regexp="env.JDK_19_JIGSAW=.*"
+    state=present
+
 
 - name: Restart agent to apply new JDKs
   service: name=teamcity-agent enabled=yes state=restarted
