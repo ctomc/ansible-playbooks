@@ -18,9 +18,6 @@
 - name: Extract OpenJDK9 Jigsaw EA
   unarchive: src=/store/jdk/{{ jdk9_jigsaw_file_name }} dest=/usr/java/jigsaw creates=/usr/java/jigsaw/jdk-9
 
-- name: remove temp
-  shell: rm -rf /opt/*.tar.gz
-
 - name: Configure buildAgent.properties
   lineinfile:
     dest="/opt/buildAgent/conf/buildAgent.properties"

@@ -1,0 +1,9 @@
+---
+# This playbook deploys a jdk9 on agents
+
+- hosts: agents-win
+  user: root
+  vars:
+    openjdk8_file_name: java-1.8.0-openjdk-1.8.0.71-0.b15.windows.x86_64.zip
+  roles:
+    - windows-jdk

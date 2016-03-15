@@ -1,0 +1,20 @@
+---
+
+- name: stop agent
+  win_service: name=teamcity-agent state=stopped
+
+- name: Copy Open JDK 8
+  win_copy: src=/store/jdk/{{ openjdk8_file_name }} dest: "C:\opt\java\openjdk-8.zip"
+
+- name: Extract OpenJDK8
+  win_unzip: src: "C:\opt\java\openjdk-8.zip" dest: "C:\opt\java" creates: "C:\opt\java\java-1.8.0-openjdk-1.8.0.71-0.b15.windows.x86_64" rm: true
+
+- name: Configure buildAgent.properties
+  win_lineinfile:
+    dest="C:\BuildAgent\conf\buildAgent.properties"
+    line="env.OPENJDK_18=C:/opt/java/java-1.8.0-openjdk-1.8.0.71-0.b15.windows.x86_64"
+    regexp="env.OPENJDK_18=.*"
+    state=present
+
+- name: Restart agent to apply new JDKs
+  win_service: name=teamcity-agent enabled=yes state=restarted
