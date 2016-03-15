@@ -9,20 +9,14 @@
     - /usr/java/jdk-9
     - /usr/java/jigsaw/jdk-9
 
-- name: Download OpenJDK 9 jigsaw EA
-  get_url: url={{ teamcity_server_url }}/agents-data/{{ jdk9_jigsaw_file_name }} dest=/opt/jigsaw-jdk-9-ea.tar.gz
-
-- name: Download OpenJDK 9 EA
-  get_url: url={{ teamcity_server_url }}/agents-data/{{ jdk9_file_name }} dest=/opt/jdk-9-ea.tar.gz
-
 - name: Extract JDK9 EA
-  unarchive: src=/opt/jdk-9-ea.tar.gz dest=/usr/java copy=no creates=/usr/java/jdk-9
+  unarchive: src=/store/jdk/{{ jdk9_file_name }} dest=/usr/java creates=/usr/java/jdk-9
 
 - name: create jigsaw directory
   file: path=/usr/java/jigsaw owner=teamcity group=teamcity state=directory recurse=true
 
 - name: Extract OpenJDK9 Jigsaw EA
-  unarchive: src=/opt/jigsaw-jdk-9-ea.tar.gz dest=/usr/java/jigsaw copy=no creates=/usr/java/jigsaw/jdk-9
+  unarchive: src=/store/jdk/{{ jdk9_jigsaw_file_name }} dest=/usr/java/jigsaw creates=/usr/java/jigsaw/jdk-9
 
 - name: remove temp
   shell: rm -rf /opt/*.tar.gz
@@ -38,7 +32,6 @@
     line="env.JDK_19_JIGSAW=/usr/java/jigsaw/jdk-9"
     regexp="env.JDK_19_JIGSAW=.*"
     state=present
-
 
 - name: Restart agent to apply new JDKs
   service: name=teamcity-agent enabled=yes state=restarted
