@@ -1,0 +1,17 @@
+---
+
+- name: stop agent
+  service: name=teamcity-agent state=stopped
+
+- name: copy legacy-as to agent
+  synchronize: src=/store/legacy-as dest=/store/legacy-as
+
+- name: Configure buildAgent.properties
+  lineinfile:
+    dest="/opt/buildAgent/conf/buildAgent.properties"
+    line="env.LEGACY_AS=/store/legacy-as"
+    regexp="env.LEGACY_AS=.*"
+    state=present
+
+- name: Restart agent to apply legacy as paths
+  service: name=teamcity-agent enabled=yes state=restarted
