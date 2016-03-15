@@ -11,7 +11,7 @@
 
 - name: Configure buildAgent.properties
   win_lineinfile:
-    dest="C:\BuildAgent\conf\buildAgent.properties"
+    dest="C:\\BuildAgent\\conf\\buildAgent.properties"
     line="env.OPENJDK_18=C:/opt/java/java-1.8.0-openjdk-1.8.0.71-0.b15.windows.x86_64"
     regexp="env.OPENJDK_18=.*"
     state=present
