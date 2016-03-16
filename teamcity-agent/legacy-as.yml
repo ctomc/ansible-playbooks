@@ -1,7 +1,7 @@
 ---
 # This playbook deploys legacs as to agents and exposes enviroment variable LEGACY_AS for teamcity agent
 
-- hosts: agents
+- hosts: agents-el7
   user: root
   roles:
     - legacy-as

@@ -4,7 +4,7 @@
   service: name=teamcity-agent state=stopped
 
 - name: copy legacy-as to agent
-  synchronize: src=/store/legacy-as dest=/store/legacy-as
+  synchronize: src=/store/legacy-as dest=/store/
 
 - name: Configure buildAgent.properties
   lineinfile:
