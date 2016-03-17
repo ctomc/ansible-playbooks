@@ -1,0 +1,6 @@
+---
+# This playbook deploys legacs as to agents and exposes enviroment variable LEGACY_AS for teamcity agent
+
+- hosts: agents-win
+  roles:
+    - win-legacy-as

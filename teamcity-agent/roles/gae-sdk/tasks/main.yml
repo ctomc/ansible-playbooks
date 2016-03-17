@@ -1,0 +1,17 @@
+---
+
+- name: make dirs
+  file: path=/store/gae owner=teamcity group=teamcity state=directory recurse=true
+
+- name: copy gae
+  unarchive: src=/store/gae/appengine-java-sdk-1.9.34.zip dest=/store/gae/ creates=/store/gae/appengine-java-sdk-1.9.34
+
+- name: Configure buildAgent.properties
+  lineinfile:
+    dest="/opt/buildAgent/conf/buildAgent.properties"
+    line="env.GAE_HOME=/store/gae/appengine-java-sdk-1.9.34/"
+    regexp="env.GAE_HOME=.*"
+    state=present
+
+- name: Restart agent to apply legacy as paths
+  service: name=teamcity-agent enabled=yes state=restarted
