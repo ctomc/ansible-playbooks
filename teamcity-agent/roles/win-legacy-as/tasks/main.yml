@@ -6,7 +6,7 @@
 - name: Configure buildAgent.properties
   win_lineinfile:
     dest="C:\\BuildAgent\\conf\\buildAgent.properties"
-    line="env.LEGACY_AS=c:\\store\\legacy-as"
+    line="env.LEGACY_AS=c:\\\\store\\\\legacy-as"
     regexp="env.LEGACY_AS=.*"
     state=present
 
