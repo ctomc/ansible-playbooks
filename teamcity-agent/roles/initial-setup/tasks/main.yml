@@ -12,6 +12,7 @@
   with_items:
    - glibc.i686
    - libgcc.i686
+   - zlib.i686
    - net-tools
    - unzip
    - git
