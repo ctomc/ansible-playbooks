@@ -8,7 +8,7 @@
   file: path={{ item }} owner=teamcity group=teamcity state=absent
   with_items:
     - /store/repository/
-    - /store/eap-repository/
+#    - /store/eap-repository/
     - /opt/buildAgent/logs
     - /opt/buildAgent/work
     - /opt/buildAgent/temp

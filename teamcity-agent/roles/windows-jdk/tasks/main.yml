@@ -6,14 +6,14 @@
 #- name: Copy Open JDK 8
 #  win_copy: src=/store/jdk/{{ openjdk8_file_name }} dest="C:\opt\java\openjdk-8.zip"
 
-- name: Copy Oracle JDK 8
-  win_copy: src=/store/jdk/{{ jdk8_file_name }} dest="C:\opt\java\jdk-8.zip"
+#- name: Copy Oracle JDK 8
+#  win_copy: src=/store/jdk/{{ jdk8_file_name }} dest="C:\opt\java\jdk-8.zip"
 
 #- name: Extract OpenJDK8
 #  win_unzip: src="C:\opt\java\openjdk-8.zip" dest="C:\opt\java" creates="C:\opt\java\java-1.8.0-openjdk-1.8.0.71-0.b15.windows.x86_64" rm=True
 
-- name: Extract Oracle JDK8
-  win_unzip: src="C:\opt\java\jdk-8.zip" dest="C:\opt\java" creates="C:\opt\java\jdk1.8.0_92" rm=True
+#- name: Extract Oracle JDK8
+#  win_unzip: src="C:\opt\java\jdk-8.zip" dest="C:\opt\java" creates="C:\opt\java\jdk1.8.0_92" rm=True
 
 - name: Configure buildAgent.properties
 #  win_lineinfile:
@@ -23,7 +23,7 @@
 #    state=present
   win_lineinfile:
     dest="C:\\BuildAgent\\conf\\buildAgent.properties"
-    line="env.JDK_18=C:\\opt\\java\\jdk1.8.0_92"
+    line="env.JDK_18=C:\\\\opt\\\\java\\\\jdk1.8.0_92"
     regexp="env.JDK_18=.*"
     state=present
 

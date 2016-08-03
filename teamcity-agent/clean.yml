@@ -1,7 +1,7 @@
 ---
 # This playbook deploys a teamcity agent
 
-- hosts: agents
+- hosts: agents-el7
   user: root
   vars:
     teamcity_server_url: http://teamcity.ci.wildfly.org

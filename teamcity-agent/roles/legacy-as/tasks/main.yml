@@ -1,7 +1,7 @@
 ---
 
-- name: stop agent
-  service: name=teamcity-agent state=stopped
+#- name: stop agent
+#  service: name=teamcity-agent state=stopped
 
 - name: copy legacy-as to agent
   synchronize: src=/store/legacy-as dest=/store/
@@ -13,5 +13,5 @@
     regexp="env.LEGACY_AS=.*"
     state=present
 
-- name: Restart agent to apply legacy as paths
-  service: name=teamcity-agent enabled=yes state=restarted
+#- name: Restart agent to apply legacy as paths
+#  service: name=teamcity-agent enabled=yes state=restarted

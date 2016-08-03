@@ -3,12 +3,12 @@
 - name: copy legacy-as to agent
   win_copy: src=/store/legacy-as dest=c:/store/
 
-- name: Configure buildAgent.properties
-  win_lineinfile:
-    dest="C:\\BuildAgent\\conf\\buildAgent.properties"
-    line="env.LEGACY_AS=c:\\\\store\\\\legacy-as"
-    regexp="env.LEGACY_AS=.*"
-    state=present
+#- name: Configure buildAgent.properties
+#  win_lineinfile:
+#    dest="C:\\BuildAgent\\conf\\buildAgent.properties"
+#    line="env.LEGACY_AS=c:\\\\store\\\\legacy-as"
+#    regexp="env.LEGACY_AS=.*"
+#    state=present
 
-- name: Restart agent to apply new config
-  win_service: name=TCBuildAgent start_mode=auto state=restarted
+#- name: Restart agent to apply new config
+#  win_service: name=TCBuildAgent start_mode=auto state=restarted
