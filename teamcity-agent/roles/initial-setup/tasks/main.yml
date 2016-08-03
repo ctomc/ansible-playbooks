@@ -19,6 +19,7 @@
    - bzip2
    - open-vm-tools
    - libselinux-python
+   - fontconfig
 
 - name: disable selinux
   selinux: state=disabled
