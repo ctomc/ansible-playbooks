@@ -8,8 +8,10 @@
   with_items:
     - c:\store\repository
     - C:\BuildAgent\logs
-    - C:\BuildAgent\work
     - C:\BuildAgent\temp
+
+- name: clean work
+  raw: rm -Force -Recurse C:\BuildAgent\work
 
 - name: Restart agent
   win_service: name=TCBuildAgent start_mode=auto state=restarted
