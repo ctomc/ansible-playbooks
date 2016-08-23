@@ -1,0 +1,17 @@
+---
+This role cleans teamcity related data from windows machine
+
+- name: stop agent
+  win_service: name=TCBuildAgent state=stopped
+
+- name: clean maven repo & teamcity work dirs
+  win_file: path={{ item }} state=absent
+  with_items:
+    - c:\store\repository
+    - c:\opt/buildAgent\logs
+    - c:\opt\buildAgent\work
+    - c:\opt\buildAgent\temp
+#- command: /usr/bin/rm -rf /tmp/*
+
+- name: Restart agent
+  win_service: name=TCBuildAgent start_mode=auto state=restarted
