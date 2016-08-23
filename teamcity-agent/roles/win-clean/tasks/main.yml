@@ -7,10 +7,9 @@
   win_file: path={{ item }} state=absent
   with_items:
     - c:\store\repository
-    - c:\opt/buildAgent\logs
-    - c:\opt\buildAgent\work
-    - c:\opt\buildAgent\temp
-#- command: /usr/bin/rm -rf /tmp/*
+    - C:\BuildAgent\logs
+    - C:\BuildAgent\work
+    - C:\BuildAgent\temp
 
 - name: Restart agent
   win_service: name=TCBuildAgent start_mode=auto state=restarted

@@ -1,0 +1,6 @@
+---
+
+- name: disable firewall
+  raw: Set-NetFirewallProfile -Profile * -Enabled False
+
+
