@@ -4,6 +4,6 @@
 - hosts: agents-el7
   user: root
   vars:
-    jdk9_file_name: jdk-9-ea+129_linux-x86_bin.tar.gz
+    jdk9_file_name: jdk-9-ea+131_linux-x86_bin.tar.gz
   roles:
     - deploy-jdk9
