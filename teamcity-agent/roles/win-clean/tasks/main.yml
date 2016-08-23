@@ -1,5 +1,4 @@
 ---
-This role cleans teamcity related data from windows machine
 
 - name: stop agent
   win_service: name=TCBuildAgent state=stopped
