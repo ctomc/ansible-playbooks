@@ -1,7 +1,7 @@
 ---
 # This playbook deploys clean teamcity agent work directories
 
-- hosts: build01-win
+- hosts: agents-win
   user: root
   roles:
     - win-clean
