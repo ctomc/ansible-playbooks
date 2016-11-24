@@ -11,6 +11,8 @@
     state: mounted
 
 - name: create maven repo link
+  file: path=/store/repository owner=teamcity group=teamcity state=absent
+  file: path=/store/work/repository owner=teamcity group=teamcity state=directory
   file: src=/store/work/repository dest=/store/repository owner=teamcity group=teamcity state=link force=true
 
 
