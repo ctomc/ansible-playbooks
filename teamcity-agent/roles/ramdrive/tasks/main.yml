@@ -1,0 +1,32 @@
+---
+- name: stop agent
+  service: name=teamcity-agent state=stopped
+
+- name: Create RAM drive
+  mount:
+    name: /store/work
+    src: tmpfs
+    fstype: tmpfs
+    opts: nodev,nosuid,nodiratime,size=7g
+    state: present
+
+- name: create maven repo link
+  file: src=/store/work/repository dest=/store/repository owner=teamcity group=teamcity state=link force=true
+
+
+- name: Configure buildAgent.properties
+  lineinfile:
+    dest="/opt/buildAgent/conf/buildAgent.properties"
+    line="workDir=/store/work/tc-work"
+    regexp="workDir=.*"
+    state=present
+
+- name: Configure buildAgent.properties
+  lineinfile:
+    dest="/opt/buildAgent/conf/buildAgent.properties"
+    line="tempDir=/store/work/temp"
+    regexp="tempDir=.*"
+    state=present
+
+- name: Restart agent
+  service: name=teamcity-agent enabled=yes state=restarted

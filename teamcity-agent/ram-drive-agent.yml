@@ -1,0 +1,7 @@
+---
+# This playbook deploys a teamcity agent
+
+- hosts: agents-ramdrive
+  user: root
+  roles:
+    - ramdrive
