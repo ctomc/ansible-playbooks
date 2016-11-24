@@ -10,9 +10,11 @@
     opts: nodev,nosuid,nodiratime,size=7g
     state: mounted
 
-- name: create maven repo link
+- name: empty maven repo
   file: path=/store/repository owner=teamcity group=teamcity state=absent
+- name: create maven repo
   file: path=/store/work/repository owner=teamcity group=teamcity state=directory
+- name: create maven repo link
   file: src=/store/work/repository dest=/store/repository owner=teamcity group=teamcity state=link force=true
 
 
