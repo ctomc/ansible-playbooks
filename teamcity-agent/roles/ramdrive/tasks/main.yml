@@ -25,6 +25,13 @@
     regexp="workDir=.*"
     state=present
 
+- name: Configure rc.local
+  lineinfile:
+    dest="/etc/rc.d/rc.local"
+    line="mkdir /store/work/repository"
+    regexp="mkdir /store/work/repository"
+    state=present
+
 - name: Configure buildAgent.properties
   lineinfile:
     dest="/opt/buildAgent/conf/buildAgent.properties"
