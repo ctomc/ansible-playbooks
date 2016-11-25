@@ -31,6 +31,12 @@
     line="mkdir /store/work/repository"
     regexp="mkdir /store/work/repository"
     state=present
+- name: Configure rc.local
+  lineinfile:
+    dest="/etc/rc.d/rc.local"
+    line="chown teamcity:teamcity /store/work/repository"
+    regexp="chown teamcity:teamcity /store/work/repository"
+    state=present
 
 - name: Configure buildAgent.properties
   lineinfile:
