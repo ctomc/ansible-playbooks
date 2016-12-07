@@ -12,12 +12,24 @@
 - name: Extract JDK9 EA
   unarchive: src=/store/jdk/{{ jdk9_file_name }} dest=/usr/java creates=/usr/java/jdk-9
 
-#- name: Configure buildAgent.properties
-#  lineinfile:
-#    dest="/opt/buildAgent/conf/buildAgent.properties"
-#    line="env.JDK_19=/usr/java/jdk-9"
-#    regexp="env.JDK_19=.*"
-##    state=present
+- name: create jigsaw directory
+  file: path=/usr/java/jigsaw owner=teamcity group=teamcity state=directory recurse=true
+
+- name: Extract OpenJDK9 Jigsaw EA
+  unarchive: src=/store/jdk/{{ jdk9_jigsaw_file_name }} dest=/usr/java/jigsaw creates=/usr/java/jigsaw/jdk-9
+
+- name: Configure buildAgent.properties
+  lineinfile:
+    dest="/opt/buildAgent/conf/buildAgent.properties"
+    line="env.JDK_19=/usr/java/jdk-9"
+    regexp="env.JDK_19=.*"
+    state=present
+  lineinfile:
+    dest="/opt/buildAgent/conf/buildAgent.properties"
+    line="env.JDK_19_JIGSAW=/usr/java/jigsaw/jdk-9"
+    regexp="env.JDK_19_JIGSAW=.*"
+    state=present
+
 
 #- name: Restart agent to apply new JDKs
 #  service: name=teamcity-agent enabled=yes state=restarted
