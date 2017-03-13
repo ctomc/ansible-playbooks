@@ -1,7 +1,7 @@
 ---
 # This playbook deploys a teamcity agent
 
-- hosts: build44-el7
+- hosts: agents-ramdrive
   user: root
   vars:
     teamcity_server_url: http://teamcity.ci.wildfly.org

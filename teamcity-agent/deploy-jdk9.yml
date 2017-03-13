@@ -4,7 +4,7 @@
 - hosts: agents-el7
   user: root
   vars:
-    jdk9_file_name: jdk-9-ea+147_linux-x86_bin.tar.gz
-    jdk9_jigsaw_file_name: jigsaw-jdk-9-ea+146_linux-x86_bin.tar.gz
+    jdk9_file_name: jdk-9-ea+155_linux-x86_bin.tar.gz
+    jdk9_jigsaw_file_name: jigsaw-jdk-9-ea+148_linux-x86_bin.tar.gz
   roles:
     - deploy-jdk9

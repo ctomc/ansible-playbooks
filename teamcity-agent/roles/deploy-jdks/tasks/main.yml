@@ -13,46 +13,52 @@
 - shell: rm -rf /opt/*.tar.gz
 - shell: rm -rf /usr/java/jdk*
 
-- file: path=/opt/ibm owner=teamcity group=teamcity state=directory recurse=true
+- name: create dirs
+  file: path=/opt/ibm owner=teamcity group=teamcity state=directory recurse=true
+
+- name: copy jdk8 rpm
+  copy:
+    src: /store/jdk/jdk-8u112-linux-i586.rpm
+    dest: /opt/jdk-8u112-linux-i586.rpm
 
 - name: Install JDK8 as default for running teamcity agent
-  yum: name={{ teamcity_server_url }}/agents-data/jdk-8u74-linux-i586.rpm state=present
+  yum: name=/opt/jdk-8u112-linux-i586.rpm state=present
 
-- name: Download IBM JDK7
-  get_url: url={{ teamcity_server_url }}/agents-data/ibm-java-i386-71.tar.gz dest=/opt/java-i386-71.tar.gz
+#- name: Download IBM JDK7
+#  get_url: url={{ teamcity_server_url }}/agents-data/ibm-java-i386-71.tar.gz dest=/opt/java-i386-71.tar.gz
 
-- name: Download IBM JDK8
-  get_url: url={{ teamcity_server_url }}/agents-data/ibm-java-i386-80.tar.gz dest=/opt/java-i386-80.tar.gz
+#- name: Download IBM JDK8
+#  get_url: url={{ teamcity_server_url }}/agents-data/ibm-java-i386-80.tar.gz dest=/opt/java-i386-80.tar.gz
 
-- name: Download Oracle JDK6
-  get_url: url={{ teamcity_server_url }}/agents-data/jdk-6u45-linux-i586.tar.gz dest=/opt/jdk-6u45-linux-i586.tar.gz
+#- name: Download Oracle JDK6
+#  get_url: url={{ teamcity_server_url }}/agents-data/jdk-6u45-linux-i586.tar.gz dest=/opt/jdk-6u45-linux-i586.tar.gz
 
-- name: Download Oracle JDK7
-  get_url: url={{ teamcity_server_url }}/agents-data/jdk-7u80-linux-i586.tar.gz dest=/opt/jdk-7u80-linux-i586.tar.gz
+#- name: Download Oracle JDK7
+#  get_url: url={{ teamcity_server_url }}/agents-data/jdk-7u80-linux-i586.tar.gz dest=/opt/jdk-7u80-linux-i586.tar.gz
 
 #- name: Download Oracle JDK8
 #  get_url: url={{ teamcity_server_url }}/agents-data/jdk-8u72-linux-i586.tar.gz dest=/opt/jdk-8u72-linux-i586.tar.gz
 
 - name: Extract JDK6
-  unarchive: src=/opt/jdk-6u45-linux-i586.tar.gz dest=/usr/java copy=no creates=/usr/java/jdk1.6.0_45
+  unarchive: src=/store/jdk/jdk-6u45-linux-i586.tar.gz dest=/usr/java creates=/usr/java/jdk1.6.0_45
 
 - name: Extract JDK7
-  unarchive: src=/opt/jdk-7u80-linux-i586.tar.gz dest=/usr/java copy=no creates=/usr/java/jdk1.7.0_80
+  unarchive: src=/store/jdk/jdk-7u80-linux-i586.tar.gz dest=/usr/java creates=/usr/java/jdk1.7.0_80
 
 #- name: Extract JDK8
 #  unarchive: src=/opt/jdk-8u72-linux-i586.tar.gz dest=/usr/java copy=no creates=/usr/java/jdk1.8.0_72
 
 - name: Extract IBM JDK7
-  unarchive: src=/opt/java-i386-71.tar.gz dest=/opt/ibm/ copy=no creates=ibm-java-i386-71
+  unarchive: src=/store/jdk/ibm-java-i386-71.tar.gz dest=/opt/ibm/ creates=ibm-java-i386-71
 
 - name: Extract IBM JDK8
-  unarchive: src=/opt/java-i386-80.tar.gz dest=/opt/ibm/ copy=no creates=ibm-java-i386-80
+  unarchive: src=/store/jdk/ibm-java-i386-80.tar.gz dest=/opt/ibm/ creates=ibm-java-i386-80
 
 #- name: Link default & latest jvm
 #  file: dest=/usr/java/latest src=/usr/java/jdk1.8.0_72 state=link owner=teamcity group=teamcity
 
 - name: remove temp
-  shell: rm -rf /opt/*.tar.gz
+  shell: rm -rf /opt/*.tar.gz && rm -rf /opt/*.rpm
 
 - name: Restart agent to apply new JDKs
   service: name=teamcity-agent enabled=yes state=restarted
