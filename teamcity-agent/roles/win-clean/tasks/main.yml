@@ -1,0 +1,18 @@
+---
+
+- name: stop agent
+  win_service: name=TCBuildAgent state=stopped
+
+- name: clean work
+  raw: cmd.exe /c rd /s /q C:\BuildAgent\work\
+
+- name: clean maven repo & teamcity work dirs
+  win_file: path={{ item }} state=absent
+  with_items:
+    - c:\store\repository
+    - C:\BuildAgent\logs
+    - C:\BuildAgent\temp
+    - C:\BuildAgent\work
+
+- name: Restart agent
+  win_service: name=TCBuildAgent start_mode=auto state=restarted
