@@ -9,7 +9,8 @@
 - name: clean maven repo & teamcity work dirs
   win_file: path={{ item }} state=absent
   with_items:
-    - c:\store\repository
+    - C:\store\repository
+    - C:\store\eap-repository
     - C:\BuildAgent\logs
     - C:\BuildAgent\temp
     - C:\BuildAgent\work
