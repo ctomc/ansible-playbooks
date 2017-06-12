@@ -1,0 +1,10 @@
+---
+# This playbook deploys a jdk9 on agents
+
+- hosts: build60-win
+  user: root
+  vars:
+    jdk8_file_name: jdk1.8.0_92-win32.zip
+    openjdk8_file_name: java-1.8.0-openjdk-1.8.0.71-0.b15.windows.x86_64.zip
+  roles:
+    - win-initial
