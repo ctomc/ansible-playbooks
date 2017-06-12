@@ -1,24 +1,29 @@
 ---
 - name: install packages
   win_chocolatey:
-  name: {{ item }}
-  with_items:
-      - git
-      - putty
-  state: present
+   name: git
+   state: present
 
-win_chocolatey:
-  name: powershell
-  state: present
-  upgrade: true
+#win_chocolatey:
+#  name: powershell
+#  state: present
+#  upgrade: true
 
-- name: copy JDKs
+- name: copy JDK 7
   win_copy: src=/store/jdk/jdk1.7.0_80-windows-i586.zip dest="C:\Java\jdk7.zip"
+
+- name: copy JDK 8
   win_copy: src=/store/jdk/jdk1.8.0_131-windows-i586.zip dest="C:\Java\jdk8.zip"
 
-- name: extract JDK
-  win_unzip: src="C:\Java\jdk-8.zip" dest="C:\Java" creates="C:\Java\jdk1.8.0_131" rm=True
-  win_unzip: src="C:\Java\jdk-7.zip" dest="C:\Java" creates="C:\Java\jdk1.7.0_80" rm=True
+- name: extract JDK 8
+  win_unzip:
+       src: C:\Java\jdk8.zip
+       dest: C:\Java
+       creates: C:\Java\jdk1.8.0_131
+       rm: True
+
+- name: extract JDK 7
+  win_unzip: src="C:\Java\jdk7.zip" dest="C:\Java" creates="C:\Java\jdk1.7.0_80" rm=True
 
 - name: setup env vars
   win_environment:
@@ -27,7 +32,13 @@ win_chocolatey:
     value: C:\Java\jdk1.8.0_131
     level: machine
 
-- name: Download earthrise.jpg to specified path
+- name: add java to path
+  win_path:
+    name: PATH
+    elements: %JAVA_HOME%\bin
+    state: present
+
+- name: Download agent
   win_get_url:
     url: http://brontes.brontes.local/update/buildAgent.zip
     dest: C:\store\buildAgent.zip
@@ -35,12 +46,12 @@ win_chocolatey:
 - name: extract build agent
   win_unzip:
     src: C:\store\buildAgent.zip
-    dest: C:\
-    creates: C:\buildAgent 
+    dest: C:\buildAgent
+    creates: C:\buildAgent
     rm: True
 
-- name: install service
-  win_shell: C:\buildAgent\bin\service.install.bat
+- name: install agent
+  win_command: C:\buildAgent\bin\install.bat http://teamcity.brontes.local
 
   
 #- name: stop agent
