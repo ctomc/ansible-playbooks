@@ -50,6 +50,13 @@
     creates: C:\buildAgent
     rm: True
 
+- name: Configure buildAgent.properties
+  win_lineinfile:
+    dest="C:\\BuildAgent\\launcher\\conf\\wrapper.conf"
+    line="wrapper.java.command=C:\\\\opt\\\\java\\\\jdk1.8.0_131\\\\bin\\\\java.exe"
+    regexp="wrapper.java.command=.*"
+    state=present
+
 - name: install agent
   win_command: C:\buildAgent\bin\install.bat {{ teamcity_server_host }}
 
