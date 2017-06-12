@@ -35,12 +35,12 @@
 - name: add java to path
   win_path:
     name: PATH
-    elements: %JAVA_HOME%\bin
+    elements: "%JAVA_HOME%\bin"
     state: present
 
 - name: Download agent
   win_get_url:
-    url: http://brontes.brontes.local/update/buildAgent.zip
+    url: {{ teamcity_server_host }}/update/buildAgent.zip
     dest: C:\store\buildAgent.zip
 
 - name: extract build agent
@@ -51,7 +51,7 @@
     rm: True
 
 - name: install agent
-  win_command: C:\buildAgent\bin\install.bat http://teamcity.brontes.local
+  win_command: C:\buildAgent\bin\install.bat {{ teamcity_server_host }}
 
   
 #- name: stop agent
@@ -75,6 +75,7 @@
     line="env.JDK_18=C:\\\\opt\\\\java\\\\jdk1.8.0_131"
     regexp="env.JDK_18=.*"
     state=present
+- name: "agent"
   win_lineinfile:
     dest="C:\\BuildAgent\\conf\\buildAgent.properties"
     line="env.JDK_17=C:\\\\opt\\\\java\\\\jdk1.7.0_80"
