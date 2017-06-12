@@ -40,7 +40,7 @@
 
 - name: Download agent
   win_get_url:
-    url: {{ teamcity_server_host }}/update/buildAgent.zip
+    url: "{{ teamcity_server_host }}/update/buildAgent.zip"
     dest: C:\store\buildAgent.zip
 
 - name: extract build agent
@@ -50,15 +50,15 @@
     creates: C:\buildAgent
     rm: True
 
-- name: Configure buildAgent.properties
+- name: Configure wrapper
   win_lineinfile:
     dest="C:\\BuildAgent\\launcher\\conf\\wrapper.conf"
-    line="wrapper.java.command=C:\\\\opt\\\\java\\\\jdk1.8.0_131\\\\bin\\\\java.exe"
+    line="wrapper.java.command=C:\\\\Java\\\\jdk1.8.0_131\\\\bin\\\\java.exe"
     regexp="wrapper.java.command=.*"
     state=present
 
 - name: install agent
-  win_command: C:\buildAgent\bin\install.bat {{ teamcity_server_host }}
+  win_command: C:\buildAgent\bin\install.bat "{{ teamcity_server_host }}"
 
   
 #- name: stop agent
