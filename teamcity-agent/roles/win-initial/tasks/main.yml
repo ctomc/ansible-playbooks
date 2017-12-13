@@ -53,17 +53,17 @@
 - name: Configure wrapper
   win_lineinfile:
     dest="C:\\BuildAgent\\launcher\\conf\\wrapper.conf"
-    line="wrapper.java.command=C:\\\\Java\\\\jdk1.8.0_131\\\\bin\\\\java.exe"
+    line="wrapper.java.command=C:\\Java\\jdk1.8.0_131\\bin\\java.exe"
     regexp="wrapper.java.command=.*"
     state=present
 
 - name: copy agent configuration
-  win_template: src=buildAgent.properties dest=C:\buildAgent\conf\
+  win_template: src=buildAgent.properties dest=C:/buildAgent/conf/
 
-- name: install agent
-  win_command: C:\buildAgent\bin\service.install.bat 
+- name: install agent service
+  win_command: C:\buildAgent\bin\service.install.bat
+     chdir: C:/buildAgent/bin
 
-  
 #- name: stop agent
 #  win_service: name=TCBuildAgent state=stopped
 
