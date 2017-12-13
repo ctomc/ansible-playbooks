@@ -4,6 +4,7 @@
     name: docker-ce
     description: Docker CE repo
     baseurl: https://download.docker.com/linux/centos/7/$basearch/stable
+    gpgkey: https://download.docker.com/linux/centos/gpg
 
 - name: Install docker CE
   yum: name={{ item }} state=present
@@ -11,13 +12,12 @@
    - docker-ce
    - python-pip
 
-- name:
-   pip:
+- pip:
     name: docker-compose
 
 - user:
     name: teamcity
-    groups: docker
+    groups: docker, jboss
     append: yes
 
 - name: Enable docker
