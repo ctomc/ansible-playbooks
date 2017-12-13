@@ -1,0 +1,8 @@
+---
+# This playbook installs docker-ce to agent
+
+- hosts: build01-el7
+  user: root
+  roles:
+    - docker
+
