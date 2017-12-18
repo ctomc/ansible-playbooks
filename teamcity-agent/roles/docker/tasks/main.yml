@@ -15,6 +15,10 @@
 - pip:
     name: docker-compose
 
+- group: name=jboss
+- name: Add user "jboss"
+  user: name=jboss group=jboss shell=/bin/bash state=present
+
 - user:
     name: teamcity
     groups: docker, jboss
