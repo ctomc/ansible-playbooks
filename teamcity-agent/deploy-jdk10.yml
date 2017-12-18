@@ -1,0 +1,9 @@
+---
+# This playbook deploys a jdk9 on agents
+
+- hosts: agents-el7
+  user: root
+  vars:
+    jdk10_file_name: jdk-10-ea+36_linux-x64_bin.tar.gz
+  roles:
+    - deploy-jdk10
