@@ -3,7 +3,6 @@
 
 - hosts: template-win16
   vars:
-    jdk8_file_name: jdk1.8.0_92-win32.zip
-    teamcity_server_host: http://teamcity.brontes.local
+    teamcity_server_host: http://teamcity.ci.wildfly.org
   roles:
     - win-initial

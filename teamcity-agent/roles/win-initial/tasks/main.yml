@@ -61,7 +61,7 @@
 
 - name: install agent service
   win_command: C:\buildAgent\bin\service.install.bat
-     chdir: C:/buildAgent/bin
+    chdir=C:\buildAgent\bin
 
 #- name: stop agent
 #  win_service: name=TCBuildAgent state=stopped
