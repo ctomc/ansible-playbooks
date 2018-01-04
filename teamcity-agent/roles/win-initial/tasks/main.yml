@@ -8,6 +8,9 @@
    name: git
    state: present
 
+- name: Stop tc service if exists
+  win_service: name=TCBuildAgent state=absent
+
 - name: copy JDK 9
   win_copy: src=/store/jdk/jdk-9.0.1-win64.zip dest="C:\Java\jdk9.zip"
 
@@ -90,9 +93,9 @@
     - M:\repository
 
 - name: "create maven repository on ramdrive"
-  win_file: path=C:\store\repository state=directory
-  win_file: path=M:\repository state=directory
-  win_command: mklink /J C:\store\repository M:\repository
+  - win_file: path=C:\store\repository state=directory
+- win_file: path=M:\repository state=directory
+- win_command: mklink /J C:\store\repository M:\repository
 
 - name: Restart agent to apply new JDKs
   win_service: name=TCBuildAgent start_mode=auto state=restarted
