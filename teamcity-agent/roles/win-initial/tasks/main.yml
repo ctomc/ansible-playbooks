@@ -57,11 +57,11 @@
     state=present
 
 - name: copy agent configuration
-  win_template: src=buildAgent.properties dest=C:/buildAgent/conf/
+  win_template: src=buildAgent.properties dest=C:\\buildAgent\\conf\\buildAgent.properties
 
 - name: install agent service
   win_command: C:\buildAgent\bin\service.install.bat
-    chdir=C:\buildAgent\bin
+    chdir=C:/buildAgent/bin
 
 #- name: stop agent
 #  win_service: name=TCBuildAgent state=stopped
@@ -70,15 +70,30 @@
 - name: Configure buildAgent.properties
   win_lineinfile:
     dest="C:\\BuildAgent\\conf\\buildAgent.properties"
-    line="env.JDK_18=C:\\\\opt\\\\java\\\\jdk1.8.0_152"
+    line="env.JDK_18=C:\\\\Java\\\\jdk1.8.0_152"
     regexp="env.JDK_18=.*"
     state=present
-- name: "agent"
+- name: "agent jdk9"
   win_lineinfile:
     dest="C:\\BuildAgent\\conf\\buildAgent.properties"
-    line="env.JDK_19=C:\\\\opt\\\\java\\\\jdk-9.0.1"
+    line="env.JDK_19=C:\\\\Java\\\\jdk-9.0.1"
     regexp="env.JDK_19=.*"
     state=present
 
+- name: cleanup
+  win_file: path={{ item }} state=absent
+  with_items:
+    - C:\Java\jdk9.zip
+    - C:\Java\jdk8.zip
+    - C:\store\buildAgent.zip
+    - C:\store\repository
+    - M:\repository
+
+- name: "create maven repository on ramdrive"
+  win_file: path=C:\store\repository state=directory
+  win_file: path=M:\repository state=directory
+  win_command: mklink /J C:\store\repository M:\repository
+
 - name: Restart agent to apply new JDKs
   win_service: name=TCBuildAgent start_mode=auto state=restarted
+
