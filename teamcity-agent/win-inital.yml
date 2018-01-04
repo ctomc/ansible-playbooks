@@ -1,0 +1,9 @@
+---
+# This playbook sets up windows agent
+
+- hosts: template-win16
+  vars:
+    jdk8_file_name: jdk1.8.0_92-win32.zip
+    teamcity_server_host: http://teamcity.brontes.local
+  roles:
+    - win-initial

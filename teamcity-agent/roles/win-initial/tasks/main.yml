@@ -1,0 +1,84 @@
+---
+
+- name: disable firewall
+  raw: Set-NetFirewallProfile -Profile * -Enabled False
+
+- name: install packages
+  win_chocolatey:
+   name: git
+   state: present
+
+- name: copy JDK 9
+  win_copy: src=/store/jdk/jdk-9.0.1-win64.zip dest="C:\Java\jdk9.zip"
+
+- name: copy JDK 8
+  win_copy: src=/store/jdk/jdk1.8.0_152-win64.zip dest="C:\Java\jdk8.zip"
+
+- name: extract JDK 8
+  win_unzip:
+       src: C:\Java\jdk8.zip
+       dest: C:\Java
+       creates: C:\Java\jdk1.8.0_152
+       rm: True
+
+- name: extract JDK 9
+  win_unzip: src="C:\Java\jdk9.zip" dest="C:\Java" creates="C:\Java\jdk-9.0.1" rm=True
+
+- name: setup env vars
+  win_environment:
+    state: present
+    name: JAVA_HOME
+    value: C:\Java\jdk1.8.0_152
+    level: machine
+
+- name: add java to path
+  win_path:
+    name: PATH
+    elements: "%JAVA_HOME%\bin"
+    state: present
+
+- name: Download agent
+  win_get_url:
+    url: "{{ teamcity_server_host }}/update/buildAgent.zip"
+    dest: C:\store\buildAgent.zip
+
+- name: extract build agent
+  win_unzip:
+    src: C:\store\buildAgent.zip
+    dest: C:\buildAgent
+    creates: C:\buildAgent
+    rm: True
+
+- name: Configure wrapper
+  win_lineinfile:
+    dest="C:\\BuildAgent\\launcher\\conf\\wrapper.conf"
+    line="wrapper.java.command=C:\\Java\\jdk1.8.0_152\\bin\\java.exe"
+    regexp="wrapper.java.command=.*"
+    state=present
+
+- name: copy agent configuration
+  win_template: src=buildAgent.properties dest=C:/buildAgent/conf/
+
+- name: install agent service
+  win_command: C:\buildAgent\bin\service.install.bat
+     chdir: C:/buildAgent/bin
+
+#- name: stop agent
+#  win_service: name=TCBuildAgent state=stopped
+
+
+- name: Configure buildAgent.properties
+  win_lineinfile:
+    dest="C:\\BuildAgent\\conf\\buildAgent.properties"
+    line="env.JDK_18=C:\\\\opt\\\\java\\\\jdk1.8.0_152"
+    regexp="env.JDK_18=.*"
+    state=present
+- name: "agent"
+  win_lineinfile:
+    dest="C:\\BuildAgent\\conf\\buildAgent.properties"
+    line="env.JDK_19=C:\\\\opt\\\\java\\\\jdk-9.0.1"
+    regexp="env.JDK_19=.*"
+    state=present
+
+- name: Restart agent to apply new JDKs
+  win_service: name=TCBuildAgent start_mode=auto state=restarted
