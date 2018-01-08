@@ -93,9 +93,9 @@
     - M:\repository
 
 - name: "create maven repository on ramdrive"
-  - win_file: path=C:\store\repository state=directory
+  win_file: path=C:\store\repository state=directory
 - win_file: path=M:\repository state=directory
-- win_command: mklink /J C:\store\repository M:\repository
+- win_shell: New-Item -ItemType Junction -Path C:\store\repository\ -Value M:\repository\
 
 - name: Restart agent to apply new JDKs
   win_service: name=TCBuildAgent start_mode=auto state=restarted
