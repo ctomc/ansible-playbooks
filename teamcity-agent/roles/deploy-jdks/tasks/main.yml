@@ -18,8 +18,8 @@
 
 - name: copy jdk8 rpm
   copy:
-    src: /store/jdk/jdk-8u121-linux-i586.rpm
-    dest: /opt/jdk-8u121-linux-i586.rpm
+    src: /store/jdk/jdk-8u152-linux-i586.rpm
+    dest: /opt/jdk-8u152-linux-i586.rpm
 
 - name: Install JDK8 as default for running teamcity agent
   yum: name=/opt/jdk-8u152-linux-i586.rpm state=present
