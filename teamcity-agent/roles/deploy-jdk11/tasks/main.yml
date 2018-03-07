@@ -3,19 +3,19 @@
 #- name: stop agent
 #  service: name=teamcity-agent state=stopped
 
-- name: remove old JDK10
+- name: remove old JDK11
   file: path={{ item }} state=absent
   with_items:
-    - /usr/java/jdk-10
+    - /usr/java/jdk-11
 
-- name: Extract JDK10
-  unarchive: src=/store/jdk/{{ jdk10_file_name }} dest=/usr/java creates=/usr/java/jdk-10
+- name: Extract JDK11
+  unarchive: src=/store/jdk/{{ jdk11_file_name }} dest=/usr/java creates=/usr/java/jdk-11
 
 - name: Configure buildAgent.properties
   lineinfile:
     dest="/opt/buildAgent/conf/buildAgent.properties"
-    line="env.JDK_10=/usr/java/jdk-10"
-    regexp="env.JDK_10=.*"
+    line="env.JDK_11=/usr/java/jdk-11"
+    regexp="env.JDK_11=.*"
     state=present
 
 
