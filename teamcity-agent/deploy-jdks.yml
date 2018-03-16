@@ -5,5 +5,11 @@
   user: root
   vars:
     teamcity_server_url: http://teamcity.brontes.local
+    jdk9_file_name:  jdk-9.0.4_linux-x64_bin.tar.gz
+    jdk10_file_name: jdk-10+46_linux-x64_bin.tar.gz
+    jdk11_file_name: jdk-11-ea+4_linux-x64_bin.tar.gz
   roles:
     - deploy-jdks
+    - deploy-jdk9
+    - deploy-jdk10
+    - deploy-jdk11
