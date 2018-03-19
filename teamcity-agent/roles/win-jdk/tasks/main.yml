@@ -22,16 +22,13 @@
   win_unzip: src="C:\opt\java\jdk-9.zip" dest="C:\opt\java" creates="C:\opt\java\jdk-9.0.4" rm=True
 
 - name: Configure buildAgent.properties
-#  win_lineinfile:
-#    dest="C:\\BuildAgent\\conf\\buildAgent.properties"
-#    line="env.OPENJDK_18=C:\\opt\\java\\java-1.8.0-openjdk-1.8.0.71-0.b15.windows.x86_64"
-#    regexp="env.OPENJDK_18=.*"
-#    state=present
   win_lineinfile:
     dest="C:\\BuildAgent\\conf\\buildAgent.properties"
     line="env.JDK_18=C:\\\\opt\\\\java\\\\jdk1.8.0_162"
     regexp="env.JDK_18=.*"
     state=present
+
+- name: "add agent jdk9"
   win_lineinfile:
     dest="C:\\BuildAgent\\conf\\buildAgent.properties"
     line="env.JDK_9=C:\\\\opt\\\\java\\\\jdk-9.0.4"

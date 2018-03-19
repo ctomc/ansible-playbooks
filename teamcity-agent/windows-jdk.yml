@@ -7,4 +7,4 @@
     jdk8_file_name: jdk1.8.0_162.zip
     jdk9_file_name: openjdk-9.0.4_windows-x64_bin.zip
   roles:
-    - windows-jdk
+    - win-jdk
