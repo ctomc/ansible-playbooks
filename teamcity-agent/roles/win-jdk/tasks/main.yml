@@ -16,10 +16,10 @@
 #  win_unzip: src="C:\opt\java\openjdk-8.zip" dest="C:\opt\java" creates="C:\opt\java\java-1.8.0-openjdk-1.8.0.71-0.b15.windows.x86_64" rm=True
 
 - name: Extract Oracle JDK8
-  win_unzip: src="C:\java\jdk-8.zip" dest="C:\opt\java" creates="C:\java\jdk1.8.0_162" rm=True
+  win_unzip: src="C:\java\jdk-8.zip" dest="C:\Java" creates="C:\java\jdk1.8.0_162" rm=True
 
 - name: Extract JDK 9
-  win_unzip: src="C:\java\jdk-9.zip" dest="C:\opt\java" creates="C:\java\jdk-9.0.4" rm=True
+  win_unzip: src="C:\java\jdk-9.zip" dest="C:\Java" creates="C:\java\jdk-9.0.4" rm=True
 
 - name: Configure buildAgent.properties
   win_lineinfile:
