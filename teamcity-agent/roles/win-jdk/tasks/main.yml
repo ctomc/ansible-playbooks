@@ -7,31 +7,31 @@
 #  win_copy: src=/store/jdk/{{ openjdk8_file_name }} dest="C:\opt\java\openjdk-8.zip"
 
 - name: Copy JDK 8
-  win_copy: src=/store/jdk/{{ jdk8_file_name }} dest="C:\opt\java\jdk-8.zip"
+  win_copy: src=/store/jdk/{{ jdk8_file_name }} dest="C:\java\jdk-8.zip"
 
 - name: Copy JDK 9
-  win_copy: src=/store/jdk/{{ jdk9_file_name }} dest="C:\opt\java\jdk-9.zip"
+  win_copy: src=/store/jdk/{{ jdk9_file_name }} dest="C:\java\jdk-9.zip"
 
 #- name: Extract OpenJDK8
 #  win_unzip: src="C:\opt\java\openjdk-8.zip" dest="C:\opt\java" creates="C:\opt\java\java-1.8.0-openjdk-1.8.0.71-0.b15.windows.x86_64" rm=True
 
 - name: Extract Oracle JDK8
-  win_unzip: src="C:\opt\java\jdk-8.zip" dest="C:\opt\java" creates="C:\opt\java\jdk1.8.0_162" rm=True
+  win_unzip: src="C:\java\jdk-8.zip" dest="C:\opt\java" creates="C:\java\jdk1.8.0_162" rm=True
 
 - name: Extract JDK 9
-  win_unzip: src="C:\opt\java\jdk-9.zip" dest="C:\opt\java" creates="C:\opt\java\jdk-9.0.4" rm=True
+  win_unzip: src="C:\java\jdk-9.zip" dest="C:\opt\java" creates="C:\java\jdk-9.0.4" rm=True
 
 - name: Configure buildAgent.properties
   win_lineinfile:
     dest="C:\\BuildAgent\\conf\\buildAgent.properties"
-    line="env.JDK_18=C:\\\\opt\\\\java\\\\jdk1.8.0_162"
+    line="env.JDK_18=C:\\\\java\\\\jdk1.8.0_162"
     regexp="env.JDK_18=.*"
     state=present
 
 - name: "add agent jdk9"
   win_lineinfile:
     dest="C:\\BuildAgent\\conf\\buildAgent.properties"
-    line="env.JDK_9=C:\\\\opt\\\\java\\\\jdk-9.0.4"
+    line="env.JDK_9=C:\\\\java\\\\jdk-9.0.4"
     regexp="env.JDK_9=.*"
     state=present
 
