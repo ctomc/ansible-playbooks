@@ -3,8 +3,8 @@
 - name: stop agent
   win_service: name=TCBuildAgent state=stopped
 
-- name: clean work
-  raw: cmd.exe /c rd /s /q C:\BuildAgent\work\
+#- name: clean work
+#  raw: cmd.exe /c rd /s /q C:\BuildAgent\work\
 
 - name: clean maven repo & teamcity work dirs
   win_file: path={{ item }} state=absent
